@@ -13,6 +13,10 @@
 		DD81D0C628BEF531000780D6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DD81D0C428BEF531000780D6 /* LaunchScreen.storyboard */; };
 		DD81D0CE28BEF60F000780D6 /* BaseURL.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D0CD28BEF60F000780D6 /* BaseURL.swift */; };
 		DD81D0D128BEF6C3000780D6 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D0D028BEF6C3000780D6 /* MainViewController.swift */; };
+		DD81D0D328BF0282000780D6 /* WeatherAPIProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D0D228BF0282000780D6 /* WeatherAPIProvider.swift */; };
+		DDA191A328BF127500FFF98E /* CardCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA191A228BF127500FFF98E /* CardCollectionViewFlowLayout.swift */; };
+		DDA191A628BF172E00FFF98E /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA191A528BF172E00FFF98E /* WeatherCollectionViewCell.swift */; };
+		DDAC1AE328BF3F820013D76A /* RelativeLayoutUtilityClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAC1AE228BF3F820013D76A /* RelativeLayoutUtilityClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		DD81D0C728BEF531000780D6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DD81D0CD28BEF60F000780D6 /* BaseURL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseURL.swift; sourceTree = "<group>"; };
 		DD81D0D028BEF6C3000780D6 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		DD81D0D228BF0282000780D6 /* WeatherAPIProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPIProvider.swift; sourceTree = "<group>"; };
+		DDA191A228BF127500FFF98E /* CardCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		DDA191A528BF172E00FFF98E /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
+		DDAC1AE228BF3F820013D76A /* RelativeLayoutUtilityClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeLayoutUtilityClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,8 +66,10 @@
 			children = (
 				DD81D0B928BEF52F000780D6 /* AppDelegate.swift */,
 				DD81D0BB28BEF52F000780D6 /* SceneDelegate.swift */,
-				DD81D0D028BEF6C3000780D6 /* MainViewController.swift */,
+				DDA191A728BF173400FFF98E /* Page 1 */,
 				DD81D0CF28BEF617000780D6 /* Service */,
+				DDA191A428BF127A00FFF98E /* Common */,
+				DD81D0D428BF0286000780D6 /* Test */,
 				DD81D0C228BEF531000780D6 /* Assets.xcassets */,
 				DD81D0C428BEF531000780D6 /* LaunchScreen.storyboard */,
 				DD81D0C728BEF531000780D6 /* Info.plist */,
@@ -73,6 +83,32 @@
 				DD81D0CD28BEF60F000780D6 /* BaseURL.swift */,
 			);
 			path = Service;
+			sourceTree = "<group>";
+		};
+		DD81D0D428BF0286000780D6 /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				DD81D0D228BF0282000780D6 /* WeatherAPIProvider.swift */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		DDA191A428BF127A00FFF98E /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				DDA191A228BF127500FFF98E /* CardCollectionViewFlowLayout.swift */,
+				DDAC1AE228BF3F820013D76A /* RelativeLayoutUtilityClass.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		DDA191A728BF173400FFF98E /* Page 1 */ = {
+			isa = PBXGroup;
+			children = (
+				DD81D0D028BEF6C3000780D6 /* MainViewController.swift */,
+				DDA191A528BF172E00FFF98E /* WeatherCollectionViewCell.swift */,
+			);
+			path = "Page 1";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,8 +183,12 @@
 			files = (
 				DD81D0BA28BEF52F000780D6 /* AppDelegate.swift in Sources */,
 				DD81D0BC28BEF52F000780D6 /* SceneDelegate.swift in Sources */,
+				DDAC1AE328BF3F820013D76A /* RelativeLayoutUtilityClass.swift in Sources */,
 				DD81D0CE28BEF60F000780D6 /* BaseURL.swift in Sources */,
+				DD81D0D328BF0282000780D6 /* WeatherAPIProvider.swift in Sources */,
+				DDA191A328BF127500FFF98E /* CardCollectionViewFlowLayout.swift in Sources */,
 				DD81D0D128BEF6C3000780D6 /* MainViewController.swift in Sources */,
+				DDA191A628BF172E00FFF98E /* WeatherCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

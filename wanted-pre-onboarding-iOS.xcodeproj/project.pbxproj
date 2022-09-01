@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD4D613B28BF73DD006F7517 /* AppContentTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613A28BF73DD006F7517 /* AppContentTransitionController.swift */; };
+		DD4D613D28BF7A93006F7517 /* AppContentPresentingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613C28BF7A93006F7517 /* AppContentPresentingAnimator.swift */; };
+		DD4D614028BF995C006F7517 /* WeatherContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613F28BF995C006F7517 /* WeatherContentView.swift */; };
+		DD4D614228C06477006F7517 /* AppcontentPresentaion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D614128C06477006F7517 /* AppcontentPresentaion.swift */; };
 		DD81D0BA28BEF52F000780D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D0B928BEF52F000780D6 /* AppDelegate.swift */; };
 		DD81D0BC28BEF52F000780D6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD81D0BB28BEF52F000780D6 /* SceneDelegate.swift */; };
 		DD81D0C328BEF531000780D6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD81D0C228BEF531000780D6 /* Assets.xcassets */; };
@@ -17,9 +21,15 @@
 		DDA191A328BF127500FFF98E /* CardCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA191A228BF127500FFF98E /* CardCollectionViewFlowLayout.swift */; };
 		DDA191A628BF172E00FFF98E /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA191A528BF172E00FFF98E /* WeatherCollectionViewCell.swift */; };
 		DDAC1AE328BF3F820013D76A /* RelativeLayoutUtilityClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAC1AE228BF3F820013D76A /* RelativeLayoutUtilityClass.swift */; };
+		DDAC1AE628BF41AD0013D76A /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAC1AE528BF41AD0013D76A /* Font.swift */; };
+		DDAC1AE928BF6A1B0013D76A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAC1AE828BF6A1B0013D76A /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD4D613A28BF73DD006F7517 /* AppContentTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContentTransitionController.swift; sourceTree = "<group>"; };
+		DD4D613C28BF7A93006F7517 /* AppContentPresentingAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContentPresentingAnimator.swift; sourceTree = "<group>"; };
+		DD4D613F28BF995C006F7517 /* WeatherContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherContentView.swift; sourceTree = "<group>"; };
+		DD4D614128C06477006F7517 /* AppcontentPresentaion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppcontentPresentaion.swift; sourceTree = "<group>"; };
 		DD81D0B628BEF52F000780D6 /* wanted-pre-onboarding-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wanted-pre-onboarding-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DD81D0B928BEF52F000780D6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DD81D0BB28BEF52F000780D6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -32,6 +42,8 @@
 		DDA191A228BF127500FFF98E /* CardCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		DDA191A528BF172E00FFF98E /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		DDAC1AE228BF3F820013D76A /* RelativeLayoutUtilityClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelativeLayoutUtilityClass.swift; sourceTree = "<group>"; };
+		DDAC1AE528BF41AD0013D76A /* Font.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Font.swift; sourceTree = "<group>"; };
+		DDAC1AE828BF6A1B0013D76A /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +57,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DD4D613E28BF7A99006F7517 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				DD4D613A28BF73DD006F7517 /* AppContentTransitionController.swift */,
+				DD4D613C28BF7A93006F7517 /* AppContentPresentingAnimator.swift */,
+				DD4D614128C06477006F7517 /* AppcontentPresentaion.swift */,
+				DD4D613F28BF995C006F7517 /* WeatherContentView.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
 		DD81D0AD28BEF52F000780D6 = {
 			isa = PBXGroup;
 			children = (
@@ -66,7 +89,9 @@
 			children = (
 				DD81D0B928BEF52F000780D6 /* AppDelegate.swift */,
 				DD81D0BB28BEF52F000780D6 /* SceneDelegate.swift */,
+				DD4D613E28BF7A99006F7517 /* Animation */,
 				DDA191A728BF173400FFF98E /* Page 1 */,
+				DDAC1AEA28BF6A210013D76A /* Page 2 */,
 				DD81D0CF28BEF617000780D6 /* Service */,
 				DDA191A428BF127A00FFF98E /* Common */,
 				DD81D0D428BF0286000780D6 /* Test */,
@@ -96,8 +121,8 @@
 		DDA191A428BF127A00FFF98E /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				DDA191A228BF127500FFF98E /* CardCollectionViewFlowLayout.swift */,
-				DDAC1AE228BF3F820013D76A /* RelativeLayoutUtilityClass.swift */,
+				DDAC1AE428BF419E0013D76A /* CustomCollectionView */,
+				DDAC1AE728BF41B30013D76A /* Components */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -109,6 +134,31 @@
 				DDA191A528BF172E00FFF98E /* WeatherCollectionViewCell.swift */,
 			);
 			path = "Page 1";
+			sourceTree = "<group>";
+		};
+		DDAC1AE428BF419E0013D76A /* CustomCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				DDA191A228BF127500FFF98E /* CardCollectionViewFlowLayout.swift */,
+				DDAC1AE228BF3F820013D76A /* RelativeLayoutUtilityClass.swift */,
+			);
+			path = CustomCollectionView;
+			sourceTree = "<group>";
+		};
+		DDAC1AE728BF41B30013D76A /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DDAC1AE528BF41AD0013D76A /* Font.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		DDAC1AEA28BF6A210013D76A /* Page 2 */ = {
+			isa = PBXGroup;
+			children = (
+				DDAC1AE828BF6A1B0013D76A /* DetailViewController.swift */,
+			);
+			path = "Page 2";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,10 +233,16 @@
 			files = (
 				DD81D0BA28BEF52F000780D6 /* AppDelegate.swift in Sources */,
 				DD81D0BC28BEF52F000780D6 /* SceneDelegate.swift in Sources */,
+				DD4D614228C06477006F7517 /* AppcontentPresentaion.swift in Sources */,
 				DDAC1AE328BF3F820013D76A /* RelativeLayoutUtilityClass.swift in Sources */,
 				DD81D0CE28BEF60F000780D6 /* BaseURL.swift in Sources */,
 				DD81D0D328BF0282000780D6 /* WeatherAPIProvider.swift in Sources */,
+				DD4D614028BF995C006F7517 /* WeatherContentView.swift in Sources */,
+				DD4D613B28BF73DD006F7517 /* AppContentTransitionController.swift in Sources */,
+				DDAC1AE628BF41AD0013D76A /* Font.swift in Sources */,
+				DD4D613D28BF7A93006F7517 /* AppContentPresentingAnimator.swift in Sources */,
 				DDA191A328BF127500FFF98E /* CardCollectionViewFlowLayout.swift in Sources */,
+				DDAC1AE928BF6A1B0013D76A /* DetailViewController.swift in Sources */,
 				DD81D0D128BEF6C3000780D6 /* MainViewController.swift in Sources */,
 				DDA191A628BF172E00FFF98E /* WeatherCollectionViewCell.swift in Sources */,
 			);

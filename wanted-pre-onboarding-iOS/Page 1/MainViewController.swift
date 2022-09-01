@@ -18,6 +18,8 @@ class MainViewController: UIViewController {
         return pageSize
     }
     
+    var weatherTransition = AppContentTransitionController() // Transtion Animator 생성
+    
     fileprivate var colors: [UIColor] = [UIColor.black, UIColor.red, UIColor.green, UIColor.yellow, UIColor.systemBlue]
     
     override func viewDidLoad() {
@@ -27,14 +29,16 @@ class MainViewController: UIViewController {
         setupLayout()
     }
     
-    private var weatherCollectionView: UICollectionView = {
+    public var weatherCollectionView: UICollectionView = {
         let layout = CardCollectionViewFlowLayout()
         let pointEstimator = RelativeLayoutUtilityClass(referenceFrameSize: UIScreen.main.bounds.size)
         layout.itemSize = CGSize(width: pointEstimator.relativeWidth(multiplier: 0.85), height: 500)
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .init(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
         cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.layer.masksToBounds = true
         cv.backgroundColor = .white
+        cv.showsVerticalScrollIndicator = false
         return cv
     }()
     
@@ -68,7 +72,7 @@ class MainViewController: UIViewController {
     
 }
 
-extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MainViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
@@ -79,9 +83,28 @@ extension MainViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! WeatherCollectionViewCell
-        
-        cell.customView.backgroundColor = colors[indexPath.row]
+//        cell.backgroundColor = .gray
+//        cell.customView.backgroundColor = colors[indexPath.row]
+        cell.layer.masksToBounds = true
+        cell.layer.cornerRadius = 12
         return cell
     }
     
+}
+
+extension MainViewController: UICollectionViewDelegate {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailVC = DetailViewController()
+        weatherTransition.indexPath = indexPath
+        weatherTransition.superViewcontroller = detailVC
+        
+        detailVC.modalPresentationStyle = .custom
+        detailVC.transitioningDelegate = weatherTransition
+        //상태바까지 가리게 설정할 수 있음
+        detailVC.modalPresentationCapturesStatusBarAppearance = true
+        //TODO: Data fetch
+        
+        self.present(detailVC, animated: true, completion: nil)
+    }
 }

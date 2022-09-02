@@ -10,6 +10,10 @@ import UIKit
 
 class MainViewController: UIViewController {
     
+    var currentWeatherList = [CurrentWeatherResponseModel]()
+    
+    let viewModel = MainViewModel.shared
+    
     fileprivate var currentPage: Int = 0
     fileprivate var pageSize: CGSize {
         let layout = self.weatherCollectionView.collectionViewLayout as! CardCollectionViewFlowLayout
@@ -20,7 +24,14 @@ class MainViewController: UIViewController {
     
     var weatherTransition = AppContentTransitionController() // Transtion Animator 생성
     
-    fileprivate var colors: [UIColor] = [UIColor.black, UIColor.red, UIColor.green, UIColor.yellow, UIColor.systemBlue]
+    //dummy
+    let citiesCnt = 20
+    
+    //dummy
+    let seoul: [String: Double] = [
+        "lat": 37.56667,
+        "lon": 126.97806
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +59,16 @@ class MainViewController: UIViewController {
         self.weatherCollectionView.dataSource = self
         self.weatherCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
         currentPage = 0
+        
+        ///Network
+        weatherCollectionView.prefetchDataSource = self
+        viewModel.getCurrentWeather(location: seoul) { [weak self] crtWeather in
+            print("가져온 모델: \(crtWeather)")
+            self?.currentWeatherList.append(crtWeather)
+            DispatchQueue.main.async {
+                self?.weatherCollectionView.reloadData()
+            }
+        }
     }
     
     func setupLayout(){
@@ -78,17 +99,21 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return colors.count
+        return currentWeatherList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! WeatherCollectionViewCell
-//        cell.backgroundColor = .gray
-//        cell.customView.backgroundColor = colors[indexPath.row]
+
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 12
+        
+        let crtWeather = self.currentWeatherList[indexPath.row]
+        cell.fetchData(model: crtWeather)
+                
         return cell
     }
+
     
 }
 
@@ -107,4 +132,14 @@ extension MainViewController: UICollectionViewDelegate {
         
         self.present(detailVC, animated: true, completion: nil)
     }
+    
+}
+
+extension MainViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        guard currentPage != 0 else { return }
+        
+    }
+    
+    
 }

@@ -8,7 +8,10 @@
 import Foundation
 
 struct BaseURL {
-    static var url = {
-        return "https://api.openweathermap.org/data/3.0/onecall"
-    }
+    static let apiKey = "3e38385d70e8699253a8dcedc301e1fc"
+    static let exclude = "minutely,alerts,hourly"
+    static var url = "https://api.openweathermap.org/data/3.0/onecall?appid=\(apiKey)&lang=kr&exclude=\(exclude)&"
+
+//    static var imgUrl = "http://openweathermap.org/img/wn/10d@2x.png"
+    static var imgUrl = "http://openweathermap.org/img/wn/"
 }

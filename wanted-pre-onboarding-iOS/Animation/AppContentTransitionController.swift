@@ -22,7 +22,7 @@ class AppContentTransitionController: NSObject, UIViewControllerTransitioningDel
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return nil
+        return AppContentDismissAnimator()
     }
     
     func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {

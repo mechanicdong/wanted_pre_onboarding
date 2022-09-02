@@ -68,14 +68,14 @@ class WeatherContentView: UIView {
     public var presentTempLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: Font.semibold, size: 36)
-        label.text = "17℃"
+        label.font = UIFont(name: Font.semibold, size: 34)
+        label.text = "℃"
         return label
     }()
     
     public var tempImageView: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .green
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 5
@@ -108,9 +108,9 @@ class WeatherContentView: UIView {
         let tempStackView = UIStackView(arrangedSubviews: [tempImageView, presentTempLabel])
         tempStackView.translatesAutoresizingMaskIntoConstraints = false
         tempStackView.axis = .horizontal
-        tempStackView.distribution = .fillEqually
+        tempStackView.distribution = .fillProportionally
         tempStackView.alignment = .center
-        tempStackView.spacing = 60
+        tempStackView.spacing = 50
         
         self.addSubview(tempStackView)
         tempStackView.topAnchor.constraint(equalTo: regionLabel.bottomAnchor, constant: 30).isActive = true
@@ -206,7 +206,40 @@ class WeatherContentView: UIView {
         }
     }
     
-    func fetchDataForCell() {
+    func fetchDataForCell(regionName: String, weatherImg: String, currentTemp: Double, currentHumidity: Int) {
+        regionLabel.text = regionName
+        let degreeChangedTemp = Int(round(currentTemp - 273.15))
+        presentTempLabel.text = "\(degreeChangedTemp)" + "℃"
+        humidityLabel.text = "\(currentHumidity)" + "%"
+        
+        //이미지명을 가져와서 캐시에 있는지 체크
+        let imgUrl = BaseURL.imgUrl.appending(weatherImg).appending("@2x.png") as NSString
+        // 01d@2x.png 형태
+        print("저장할 경로: \(imgUrl.lastPathComponent)")
+        if let cachedImg = ImageCacheManager.shared.object(forKey: NSString(string: imgUrl.lastPathComponent)) {
+            DispatchQueue.main.async {
+                self.tempImageView.image = cachedImg
+                print("메모리 캐시 불러옴")
+            }
+        } else {
+            //없다면 디스크 경로에 이미지 체크
+            CustomFileManager.getImageFromDisk(imgUrl: imgUrl) { type in
+                switch type {
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self.tempImageView.image = image
+                        print("디스크캐시에서 불러온 이미지를 적용")
+                    }
+                case .failure(let err):
+                    print("서버(or Disk) 이미지 호출 실패! \(err.localizedDescription)")
+                }
+            }
+        }
+        
+        
+        //디스크 경로에 이미지가 있는지 체크
+        //1. 있다면 캐시에 저장하고 이미지 불러오기
+        //2. 없다면 url 호출로 이미지 불러오고, 디스크 경로에 저장하기
         
     }
 }

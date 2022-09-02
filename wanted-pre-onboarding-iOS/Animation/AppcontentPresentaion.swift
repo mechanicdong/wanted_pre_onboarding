@@ -17,6 +17,17 @@ class AppcontentPresentaion: UIPresentationController {
     
     override init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?) {
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.didDismissDetailNotification(_:)),
+            name: NSNotification.Name("close"),
+            object: nil
+        )
+    }
+    
+    @objc func didDismissDetailNotification(_ notification: Notification) {
+        presentedViewController.dismiss(animated: true, completion: nil)
     }
     
     override func presentationTransitionWillBegin() {
@@ -46,13 +57,19 @@ class AppcontentPresentaion: UIPresentationController {
     
     override func dismissalTransitionWillBegin() {
         super.dismissalTransitionWillBegin()
+        
         guard let coordinator = presentingViewController.transitionCoordinator else {
             blurView.alpha = 0.0
             return
         }
         coordinator.animate { animator in
             self.blurView.alpha = 0.0
+            self.presentingViewController.view.transform = CGAffineTransform.identity
             self.containerView?.layoutIfNeeded()
         }
     }
+    
+//    override var shouldRemovePresentersView: Bool {
+//        return true
+//    }
 }

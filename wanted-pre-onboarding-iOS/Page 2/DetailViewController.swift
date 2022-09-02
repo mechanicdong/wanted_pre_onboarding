@@ -64,16 +64,16 @@ class DetailViewController: UIViewController {
         self.weatherCollectionView.dataSource = self
         self.weatherCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(self.didDismissDetailNotification(_:)),
-            name: NSNotification.Name("close"),
-            object: nil
-        )
+//        NotificationCenter.default.addObserver(
+//            self,
+//            selector: #selector(self.didDismissDetailNotification(_:)),
+//            name: NSNotification.Name("close"),
+//            object: nil
+//        )
     }
     
-    @objc func didDismissDetailNotification(_ notification: Notification) {
-        self.dismiss(animated: true)
+    @objc fileprivate func didDismissDetailNotification(_ notification: Notification) {
+//        self.dismiss(animated: true)
     }
     
     func setupLayout(){

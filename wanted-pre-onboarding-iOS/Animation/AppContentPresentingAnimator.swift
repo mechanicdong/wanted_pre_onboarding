@@ -24,10 +24,12 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
 //        targetData = model[indexPath.row]
     }
     
+    // 애니메이션 동작 시간
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 1
     }
     
+    // 애니메이션 정의
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
         containerView.alpha = 1.0

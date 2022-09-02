@@ -20,40 +20,6 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         view.contentMode = .center
         return view
     }()
-    
-//    public var regionLabel: UILabel = {
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = UIFont(name: Font.semibold, size: 22)
-//        label.textColor = .black
-//        label.text = "서울특별시"
-//        return label
-//    }()
-//
-//    public var presentTempLabel: UILabel = {
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = UIFont(name: Font.semibold, size: 36)
-//        label.text = "17℃"
-//        return label
-//    }()
-//
-//    public var tempImageView: UIImageView = {
-//        let view = UIImageView()
-//        view.backgroundColor = .green
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.masksToBounds = true
-//        view.layer.cornerRadius = 5
-//        return view
-//    }()
-//
-//    public var humidityLabel: UILabel = {
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.font = UIFont(name: Font.semibold, size: 20)
-//        label.text = "습도"
-//        return label
-//    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -112,5 +78,14 @@ class WeatherCollectionViewCell: UICollectionViewCell {
                             self.transform = .identity
                            }, completion: nil)
         }
+    }
+    
+    func fetchData(model: CurrentWeatherResponseModel) {
+        customView.fetchDataForCell(
+            regionName: model.timezone,
+            weatherImg: model.current.weather[0].icon,
+            currentTemp: model.current.temp,
+            currentHumidity: model.current.humidity
+        )
     }
 }

@@ -14,6 +14,9 @@ class DetailViewController: UIViewController {
     
     var statusBarShouldBeHidden: Bool = false
     
+    var targetData: MainWeatherResponseModel?
+    var regionName: String?
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
@@ -37,6 +40,11 @@ class DetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateStatusBar(hidden: true, completion: nil)
+    }
+        
+    func fetchData(model: MainWeatherResponseModel, regionName: String?) {
+        self.targetData = model
+        self.regionName = regionName
     }
     
     func updateStatusBar(hidden: Bool, completion: ((Bool) -> Void)?) {
@@ -63,17 +71,6 @@ class DetailViewController: UIViewController {
 //        self.weatherCollectionView.delegate = self
         self.weatherCollectionView.dataSource = self
         self.weatherCollectionView.register(WeatherCollectionViewCell.self, forCellWithReuseIdentifier: "cellId")
-        
-//        NotificationCenter.default.addObserver(
-//            self,
-//            selector: #selector(self.didDismissDetailNotification(_:)),
-//            name: NSNotification.Name("close"),
-//            object: nil
-//        )
-    }
-    
-    @objc fileprivate func didDismissDetailNotification(_ notification: Notification) {
-//        self.dismiss(animated: true)
     }
     
     func setupLayout(){
@@ -96,6 +93,10 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.customView = WeatherContentView(isContentView: true, isTransition: true)
         cell.customView.translatesAutoresizingMaskIntoConstraints = false
         cell.configureCellLayout()
+        if let regionName = regionName, let targetData = targetData {
+            cell.fetchData(model: targetData, regionName: regionName)
+        }
+        
         return cell
     }
     

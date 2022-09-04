@@ -16,12 +16,14 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
     var contentViewCenterXAnchor: NSLayoutConstraint!
     
     var targetIndexPath: IndexPath?
-//    var targetData: AppContentModel?
-    
-    init(indexPath: IndexPath) {
+    var targetData: MainWeatherResponseModel?
+    var regionString: String?
+        
+    init(indexPath: IndexPath, model: MainWeatherResponseModel?, region: String?) {
         super.init()
         targetIndexPath = indexPath
-//        targetData = model[indexPath.row]
+        targetData = model
+        regionString = region
     }
     
     // 애니메이션 동작 시간
@@ -44,6 +46,11 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
 //        let startFrame = fromVC.view.convert(targetCell.frame, to: fromView)
 
         let contentView = WeatherContentView(isContentView: true, isTransition: true)
+        
+        if let targetData = targetData, let regionString = regionString {
+            contentView.fetchDataForContentVC(regionName: regionString, targetData: targetData, isTransition: true)
+        }
+        
         
         contentView.clipsToBounds = true
         contentView.layer.cornerRadius = 20
@@ -89,7 +96,6 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
         
         UIView.animate(withDuration: 0.6 * 0.6) {
             containerView.layoutIfNeeded()
-
         }
         
     }

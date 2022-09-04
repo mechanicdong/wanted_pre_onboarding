@@ -24,12 +24,8 @@ class MainViewController: UIViewController {
     
     var weatherTransition = AppContentTransitionController() // Transtion Animator 생성
     
-//    let regionNameArr = ["공주", "광주", "구미", "군산", "대구", "대전", "목포", "부산", "서산", "서울", "속초", "수원", "순천", "울산", "익산", "전주", "제주", "천안", "청주", "춘천"]
-    
     let region = RegionName().regionGeoArray
 
-//    var regionGeo = RegionGeo().regionGeoArray
-        
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -59,7 +55,7 @@ class MainViewController: UIViewController {
         currentPage = 0
         
         ///Network
-        weatherCollectionView.prefetchDataSource = self
+//        weatherCollectionView.prefetchDataSource = self
         for i in 0..<region.count {
             for (key, _) in region[i] {
                 if key == "Jeju City" {
@@ -132,7 +128,6 @@ extension MainViewController: UICollectionViewDataSource {
         return cell
     }
 
-    
 }
 
 extension MainViewController: UICollectionViewDelegate {
@@ -141,12 +136,23 @@ extension MainViewController: UICollectionViewDelegate {
         let detailVC = DetailViewController()
         weatherTransition.indexPath = indexPath
         weatherTransition.superViewcontroller = detailVC
+        weatherTransition.model = self.currentWeatherList[indexPath.row]
+        let crtWeather = self.currentWeatherList[indexPath.row]
+        for i in 0..<region.count {
+            for (key, value) in region[i] {
+                if crtWeather.name == key {
+                    weatherTransition.regionName = value
+                    //TODO: Data fetch
+                    detailVC.fetchData(model: self.currentWeatherList[indexPath.row], regionName: value)
+                }
+            }
+        }
         
         detailVC.modalPresentationStyle = .custom
         detailVC.transitioningDelegate = weatherTransition
         //상태바까지 가리게 설정할 수 있음
         detailVC.modalPresentationCapturesStatusBarAppearance = true
-        //TODO: Data fetch
+     
         
         self.present(detailVC, animated: true, completion: nil)
     }
@@ -162,11 +168,11 @@ extension MainViewController: UICollectionViewDelegate {
     
 }
 
-extension MainViewController: UICollectionViewDataSourcePrefetching {
-    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-        print("프리패치 실행")
-        guard currentPage != 0 else { return }
-        print("현재페이지 프리페치: \(currentPage)")
+//extension MainViewController: UICollectionViewDataSourcePrefetching {
+//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+//        print("프리패치 실행")
+//        guard currentPage != 0 else { return }
+//        print("현재페이지 프리페치: \(currentPage)")
 //        indexPaths.forEach {
 //            self.viewModel.getCurrentWeather(location: regionNameArr[$0.row]) { response in
 //                self.currentWeatherList.append(response)
@@ -175,5 +181,5 @@ extension MainViewController: UICollectionViewDataSourcePrefetching {
 //                }
 //            }
 //        }
-    }
-}
+//    }
+//}

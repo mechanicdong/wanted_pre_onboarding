@@ -195,7 +195,42 @@ class WeatherContentView: UIView {
         testTextLabel.heightAnchor.constraint(equalToConstant: 500).isActive = true
     }
     
-    func fetchDataForContentVC(isTransition: Bool = false) {
+    func fetchDataForContentVC(regionName: String?, targetData: MainWeatherResponseModel?, isTransition: Bool = false) {
+        regionLabel.text = regionName ?? "데이터를 불러오기 실패"
+        testTextLabel.text = targetData?.weather[0].description
+        
+        if let currentTemp = targetData?.main.temp {
+            let degreeChangedTemp = Int(round(currentTemp - 273.15))
+            DispatchQueue.main.async {
+                self.presentTempLabel.text = "\(degreeChangedTemp)" + "℃"
+            }
+        }        
+        
+        //이미지명을 가져와서 캐시에 있는지 체크
+        guard let weatherImg = targetData?.weather[0].icon else { return }
+        let imgUrl = BaseURL.imgUrl.appending(weatherImg).appending("@2x.png") as NSString
+        // 01d@2x.png 형태
+        
+        if let cachedImg = ImageCacheManager.shared.object(forKey: NSString(string: imgUrl.lastPathComponent)) {
+            print("메모리 캐시에 이미지가 있을경우: \(imgUrl.lastPathComponent)")
+            DispatchQueue.main.async {
+                self.tempImageView.image = cachedImg
+            }
+        } else {
+            //없다면 디스크 경로에 이미지 체크
+            CustomFileManager.getImageFromDisk(imgUrl: imgUrl) { type in
+                switch type {
+                case .success(let image):
+                    DispatchQueue.main.async {
+                        self.tempImageView.image = image
+                        print("디스크캐시에서 불러온 이미지를 적용")
+                    }
+                case .failure(let err):
+                    print("서버(or Disk) 이미지 호출 실패! \(err.localizedDescription)")
+                }
+            }
+        }
+        
         let size = CGSize(width: 1000, height: 10000)
         let estimateSize = testTextLabel.sizeThatFits(size)
         

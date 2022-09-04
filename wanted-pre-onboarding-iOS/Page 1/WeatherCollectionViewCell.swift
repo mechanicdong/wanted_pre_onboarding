@@ -81,12 +81,14 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     }
     
     func fetchData(model: MainWeatherResponseModel, regionName: String) {
-        customView.fetchDataForCell(
-            regionName: regionName,
-            weatherImg: model.weather[0].icon,
-            currentTemp: model.main.temp,
-            currentHumidity: model.main.humidity
-        )
+//        customView.fetchDataForCell(
+//            regionName: regionName,
+//            weatherImg: model.weather[0].icon,
+//            currentTemp: model.main.temp,
+//            currentHumidity: model.main.humidity
+//        )
+        
+        customView.fetchDataForContentVC(regionName: regionName, targetData: model, isTransition: false)
     }
     
     override func prepareForReuse() {

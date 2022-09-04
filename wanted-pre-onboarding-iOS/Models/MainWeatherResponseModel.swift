@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct MainWeatherResponseModel: Codable {
+struct MainWeatherResponseModel: Decodable {
     var weather: [WeatherDetail]
     var main: MainWeatherDetail
     var wind: MainWindDetail
     var name: String
 }
 
-struct MainWeatherDetail: Codable {
+struct MainWeatherDetail: Decodable {
     var temp: Double
     var feels_like: Double
     var temp_min: Double
@@ -23,7 +23,7 @@ struct MainWeatherDetail: Codable {
     var humidity: Int
 }
 
-struct MainWindDetail: Codable {
+struct MainWindDetail: Decodable {
     var speed: Double
 //    var deg: Int
 }

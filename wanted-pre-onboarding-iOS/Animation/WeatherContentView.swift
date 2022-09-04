@@ -215,11 +215,12 @@ class WeatherContentView: UIView {
         //이미지명을 가져와서 캐시에 있는지 체크
         let imgUrl = BaseURL.imgUrl.appending(weatherImg).appending("@2x.png") as NSString
         // 01d@2x.png 형태
-        print("저장할 경로: \(imgUrl.lastPathComponent)")
+//        print("저장할 경로: \(imgUrl.lastPathComponent)")
+        
         if let cachedImg = ImageCacheManager.shared.object(forKey: NSString(string: imgUrl.lastPathComponent)) {
+            print("메모리 캐시에 이미지가 있을경우: \(imgUrl.lastPathComponent)")
             DispatchQueue.main.async {
                 self.tempImageView.image = cachedImg
-                print("메모리 캐시 불러옴")
             }
         } else {
             //없다면 디스크 경로에 이미지 체크

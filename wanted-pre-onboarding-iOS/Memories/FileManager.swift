@@ -17,7 +17,7 @@ final class CustomFileManager {
         //이미지 이름으로 이미지파일을 만들어서 저장
         filePath.appendPathComponent(imgUrl.lastPathComponent)
         if fileManager.fileExists(atPath: filePath.path) {
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 guard let imageData = try? Data(contentsOf: filePath) else {
                     completion(.failure(NSError(domain: "no image in disk cache", code: 0)))
                     return
@@ -36,7 +36,7 @@ final class CustomFileManager {
             //api response
             guard let url = URL(string: imgUrl as String) else { return }
             print("이미지 요청 url: \(url)")
-            DispatchQueue.main.async {
+            DispatchQueue.global().async {
                 if let data = try? Data(contentsOf: url), let newImage = UIImage(data: data) {
                     //캐시 저장
                     ImageCacheManager.shared.setObject(newImage.withRenderingMode(.alwaysOriginal), forKey: NSString(string: imgUrl.lastPathComponent))

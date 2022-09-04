@@ -14,17 +14,16 @@ class MainViewModel {
     //데이터를 중복으로 불러옴을 방지하는 변수
     var dataTasks = [URLSessionDataTask]()
     
-    func getCurrentWeather(location: [String: Double], completion: @escaping (CurrentWeatherResponseModel) -> Void) {
-        let param = buildQueryString(fromDictionary: location)
-        print("변환된 파라미터: \(param)")
-        guard let url = URL(string: BaseURL.url.appending(param)),
+    func getCurrentWeather(location: String, completion: @escaping (MainWeatherResponseModel) -> Void) {
+//        let param = buildQueryString(fromDictionary: location)
+//        print("변환된 파라미터: \(param)")
+        guard let url = URL(string: BaseURL.url.appending("&q=\(location)")),
               dataTasks.first(where: { task in
                   task.originalRequest?.url == url
               }) == nil
         else { return }
         print("변환된 URL: \(url)")
         var request = URLRequest(url: url)
-//        request.httpBody = try! JSONSerialization.data(withJSONObject: location, options: .prettyPrinted)
         request.httpMethod = "GET"
         
         let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
@@ -35,7 +34,7 @@ class MainViewModel {
                       let response = response as? HTTPURLResponse,
                       let data = data,
                       let currentWeather = try?
-                        JSONDecoder().decode(CurrentWeatherResponseModel.self, from: data) else {
+                        JSONDecoder().decode(MainWeatherResponseModel.self, from: data) else {
                     print("ERROR: URLSession Data Task \(error?.localizedDescription ?? "")")
                     return
                 }
@@ -49,7 +48,7 @@ class MainViewModel {
                 }
             }
             dataTask.resume() //dataTask 실행
-            self.dataTasks.append(dataTask) //Page 중복 읽어오기 방지
+//            self.dataTasks.append(dataTask) //Page 중복 읽어오기 방지
             semaphore.wait()
         }
         
@@ -57,7 +56,7 @@ class MainViewModel {
     
     func buildQueryString(fromDictionary parameters: [String:Double]) -> String {
         var urlVars = [String]()
-        for (var k, var v) in parameters {
+        for (var k, v) in parameters {
             let characters = (CharacterSet.urlQueryAllowed as NSCharacterSet).mutableCopy() as! NSMutableCharacterSet
             characters.removeCharacters(in: "&")
 //            v = v.addingPercentEncoding(withAllowedCharacters: characters as CharacterSet)!

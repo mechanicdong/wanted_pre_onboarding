@@ -10,7 +10,7 @@ import UIKit
 
 class MainViewController: UIViewController {
     
-    var currentWeatherList = [CurrentWeatherResponseModel]()
+    var currentWeatherList = [MainWeatherResponseModel]()
     
     let viewModel = MainViewModel.shared
     
@@ -24,9 +24,11 @@ class MainViewController: UIViewController {
     
     var weatherTransition = AppContentTransitionController() // Transtion Animator 생성
     
-    let regionNameArr = ["공주", "광주", "구미", "군산", "대구", "대전", "목포", "부산", "서산", "서울", "속초", "수원", "순천", "울산", "익산", "전주", "제주", "천안", "청주", "춘천"]
+//    let regionNameArr = ["공주", "광주", "구미", "군산", "대구", "대전", "목포", "부산", "서산", "서울", "속초", "수원", "순천", "울산", "익산", "전주", "제주", "천안", "청주", "춘천"]
+    
+    let region = RegionName().regionGeoArray
 
-    var regionGeo = RegionGeo().regionGeoArray
+//    var regionGeo = RegionGeo().regionGeoArray
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,12 +60,23 @@ class MainViewController: UIViewController {
         
         ///Network
         weatherCollectionView.prefetchDataSource = self
-        for i in 0..<4 {
-            viewModel.getCurrentWeather(location: regionGeo[i]) { [weak self] crtWeather in
-                print("가져온 모델: \(crtWeather)")
-                self?.currentWeatherList.append(crtWeather)
-                DispatchQueue.main.async {
-                    self?.weatherCollectionView.reloadData()
+        for i in 0..<region.count {
+            for (key, _) in region[i] {
+                if key == "Jeju City" {
+                    let queryItem = "Jeju"
+                    viewModel.getCurrentWeather(location: queryItem) { [weak self] currentWeather in
+                        self?.currentWeatherList.append(currentWeather)
+                        DispatchQueue.main.async {
+                            self?.weatherCollectionView.reloadData()
+                        }
+                    }
+                } else {
+                    viewModel.getCurrentWeather(location: key) { [weak self] currentWeather in
+                        self?.currentWeatherList.append(currentWeather)
+                        DispatchQueue.main.async {
+                            self?.weatherCollectionView.reloadData()
+                        }
+                    }
                 }
             }
         }
@@ -109,10 +122,13 @@ extension MainViewController: UICollectionViewDataSource {
         cell.layer.cornerRadius = 12
         
         let crtWeather = self.currentWeatherList[indexPath.row]
-        print("지역 이름: \(self.regionNameArr[indexPath.row])")
-        print("셀에 들어갈 정보 모델 indexPathrow \(indexPath.row) : \(crtWeather)")
-        cell.fetchData(model: crtWeather, regionName: self.regionNameArr[indexPath.row])
-                
+        for i in 0..<region.count {
+            for (key, value) in region[i] {
+                if crtWeather.name == key {
+                    cell.fetchData(model: crtWeather, regionName: value)
+                }
+            }
+        }
         return cell
     }
 
@@ -151,13 +167,13 @@ extension MainViewController: UICollectionViewDataSourcePrefetching {
         print("프리패치 실행")
         guard currentPage != 0 else { return }
         print("현재페이지 프리페치: \(currentPage)")
-        indexPaths.forEach {
-            self.viewModel.getCurrentWeather(location: regionGeo[$0.row]) { response in
-                self.currentWeatherList.append(response)
-                DispatchQueue.main.async {
-                    self.weatherCollectionView.reloadData()
-                }
-            }
-        }
+//        indexPaths.forEach {
+//            self.viewModel.getCurrentWeather(location: regionNameArr[$0.row]) { response in
+//                self.currentWeatherList.append(response)
+//                DispatchQueue.main.async {
+//                    self.weatherCollectionView.reloadData()
+//                }
+//            }
+//        }
     }
 }

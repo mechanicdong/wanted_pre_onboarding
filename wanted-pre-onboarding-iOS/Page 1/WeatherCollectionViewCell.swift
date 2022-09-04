@@ -80,12 +80,12 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func fetchData(model: CurrentWeatherResponseModel, regionName: String) {
+    func fetchData(model: MainWeatherResponseModel, regionName: String) {
         customView.fetchDataForCell(
             regionName: regionName,
-            weatherImg: model.current.weather[0].icon,
-            currentTemp: model.current.temp,
-            currentHumidity: model.current.humidity
+            weatherImg: model.weather[0].icon,
+            currentTemp: model.main.temp,
+            currentHumidity: model.main.humidity
         )
     }
     

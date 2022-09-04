@@ -62,7 +62,7 @@ struct RegionGeo {
         "lat": 38.20694,
         "lon": 128.59194
     ]
-    
+    //Suwon-si
     static let suwon: [String: Double] = [
         "lat": 37.26389,
         "lon": 127.02861
@@ -88,6 +88,7 @@ struct RegionGeo {
         "lon": 127.15000
     ]
     
+    //Jeju City
     static let jeju: [String: Double] = [
         "lat": 33.50000,
         "lon": 126.51667
@@ -98,6 +99,7 @@ struct RegionGeo {
         "lon": 127.11389
     ]
     
+    //Cheongju-si
     static let cheongju: [String: Double] = [
         "lat": 36.64389,
         "lon": 127.48944
@@ -114,6 +116,95 @@ struct RegionGeo {
         sokcho, suwon, suncheon, ulsan, iksan,
         jeonju, jeju, cheonan, cheongju, chuncheon
     ]
+}
+
+struct RegionName {
+    static let gongju: [String: String] = [
+        "Gongju": "공주"
+    ]
     
+    static let gwangju: [String: String] = [
+        "Gwangju": "광주"
+    ]
     
+    static let gumi: [String: String] = [
+        "Gumi": "구미"
+    ]
+    
+    static let gunsan: [String: String] = [
+        "Gunsan": "군산"
+    ]
+    
+    static let daegu: [String: String] = [
+        "Daegu": "대구"
+    ]
+    
+    static let daejeon: [String: String] = [
+        "Daejeon": "대전"
+    ]
+    
+    static let mokpo: [String: String] = [
+        "Mokpo": "목포"
+    ]
+    
+    static let busan: [String: String] = [
+        "Busan": "부산"
+    ]
+    
+    static let seosan: [String: String] = [
+        "Seosan": "서산"
+    ]
+    
+    static let seoul: [String: String] = [
+        "Seoul": "서울"
+    ]
+    
+    static let sokcho: [String: String] = [
+        "Sokcho": "속초"
+    ]
+    //Suwon-si
+    static let suwon: [String: String] = [
+        "Suwon-si": "수원"
+    ]
+    
+    static let suncheon: [String: String] = [
+        "Suncheon": "순천"
+    ]
+    
+    static let ulsan: [String: String] = [
+        "Ulsan": "울산"
+    ]
+    
+    static let iksan: [String: String] = [
+        "Iksan": "익산"
+    ]
+    
+    static let jeonju: [String: String] = [
+        "Jeonju": "전주"
+    ]
+    
+    //Jeju City
+    static let jeju: [String: String] = [
+        "Jeju City": "제주"
+    ]
+    
+    static let cheonan: [String: String] = [
+        "Cheonan": "천안"
+    ]
+    
+    //Cheongju-si
+    static let cheongju: [String: String] = [
+        "Cheongju-si": "청주"
+    ]
+    
+    static let chuncheon: [String: String] = [
+        "Chuncheon": "춘천"
+    ]
+    
+    var regionGeoArray: [[String:String]] = [
+        gongju, gwangju, gumi, gunsan, daegu,
+        daejeon, mokpo, busan, seosan, seoul,
+        sokcho, suwon, suncheon, ulsan, iksan,
+        jeonju, jeju, cheonan, cheongju, chuncheon
+    ]
 }

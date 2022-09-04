@@ -24,18 +24,13 @@ class MainViewController: UIViewController {
     
     var weatherTransition = AppContentTransitionController() // Transtion Animator 생성
     
-    //dummy
-    let citiesCnt = 20
-    
-    //dummy
-    let seoul: [String: Double] = [
-        "lat": 37.56667,
-        "lon": 126.97806
-    ]
-    
+    let regionNameArr = ["공주", "광주", "구미", "군산", "대구", "대전", "목포", "부산", "서산", "서울", "속초", "수원", "순천", "울산", "익산", "전주", "제주", "천안", "청주", "춘천"]
+
+    var regionGeo = RegionGeo().regionGeoArray
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         setAttribute()
         setupLayout()
     }
@@ -50,6 +45,7 @@ class MainViewController: UIViewController {
         cv.layer.masksToBounds = true
         cv.backgroundColor = .white
         cv.showsVerticalScrollIndicator = false
+        cv.showsHorizontalScrollIndicator = false
         return cv
     }()
     
@@ -62,13 +58,16 @@ class MainViewController: UIViewController {
         
         ///Network
         weatherCollectionView.prefetchDataSource = self
-        viewModel.getCurrentWeather(location: seoul) { [weak self] crtWeather in
-            print("가져온 모델: \(crtWeather)")
-            self?.currentWeatherList.append(crtWeather)
-            DispatchQueue.main.async {
-                self?.weatherCollectionView.reloadData()
+        for i in 0..<4 {
+            viewModel.getCurrentWeather(location: regionGeo[i]) { [weak self] crtWeather in
+                print("가져온 모델: \(crtWeather)")
+                self?.currentWeatherList.append(crtWeather)
+                DispatchQueue.main.async {
+                    self?.weatherCollectionView.reloadData()
+                }
             }
         }
+        
     }
     
     func setupLayout(){
@@ -83,13 +82,14 @@ class MainViewController: UIViewController {
         spacingLayout.spacingMode = UPCarouselFlowLayoutSpacingMode.overlap(visibleOffset: 20)
     }
     
-    // MARK: UIScrollViewDelegate
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        let layout = self.weatherCollectionView.collectionViewLayout as! CardCollectionViewFlowLayout
-        let pageSide = (layout.scrollDirection == .horizontal) ? self.pageSize.width : self.pageSize.height
-        let offset = (layout.scrollDirection == .horizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y
-        currentPage = Int(floor((offset - pageSide / 2) / pageSide) + 1)
-    }
+//    // MARK: UIScrollViewDelegate
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        let layout = self.weatherCollectionView.collectionViewLayout as! CardCollectionViewFlowLayout
+//        let pageSide = (layout.scrollDirection == .horizontal) ? self.pageSize.width : self.pageSize.height
+//        let offset = (layout.scrollDirection == .horizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y
+//        currentPage = Int(floor((offset - pageSide / 2) / pageSide) + 1)
+//        print("현재페이지: \(currentPage)")
+//    }
     
 }
 
@@ -103,13 +103,15 @@ extension MainViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as! WeatherCollectionViewCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellId", for: indexPath) as? WeatherCollectionViewCell else { return UICollectionViewCell() }
 
         cell.layer.masksToBounds = true
         cell.layer.cornerRadius = 12
         
         let crtWeather = self.currentWeatherList[indexPath.row]
-        cell.fetchData(model: crtWeather)
+        print("지역 이름: \(self.regionNameArr[indexPath.row])")
+        print("셀에 들어갈 정보 모델 indexPathrow \(indexPath.row) : \(crtWeather)")
+        cell.fetchData(model: crtWeather, regionName: self.regionNameArr[indexPath.row])
                 
         return cell
     }
@@ -133,13 +135,29 @@ extension MainViewController: UICollectionViewDelegate {
         self.present(detailVC, animated: true, completion: nil)
     }
     
+    // MARK: UIScrollViewDelegate
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        let layout = self.weatherCollectionView.collectionViewLayout as! CardCollectionViewFlowLayout
+        let pageSide = (layout.scrollDirection == .horizontal) ? self.pageSize.width : self.pageSize.height
+        let offset = (layout.scrollDirection == .horizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y
+        currentPage = Int(floor((offset - pageSide / 2) / pageSide) + 1)
+        print("현재페이지: \(currentPage)")
+    }
+    
 }
 
 extension MainViewController: UICollectionViewDataSourcePrefetching {
     func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print("프리패치 실행")
         guard currentPage != 0 else { return }
-        
+        print("현재페이지 프리페치: \(currentPage)")
+        indexPaths.forEach {
+            self.viewModel.getCurrentWeather(location: regionGeo[$0.row]) { response in
+                self.currentWeatherList.append(response)
+                DispatchQueue.main.async {
+                    self.weatherCollectionView.reloadData()
+                }
+            }
+        }
     }
-    
-    
 }

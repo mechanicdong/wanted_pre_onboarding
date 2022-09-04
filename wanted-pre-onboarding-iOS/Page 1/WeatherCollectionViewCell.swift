@@ -24,7 +24,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCellLayout()
-        contentView.backgroundColor = .gray
+        contentView.backgroundColor = .white
         contentView.layer.masksToBounds = true
         contentView.layer.cornerRadius = 12
     }
@@ -35,7 +35,7 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCellLayout() {
-        self.backgroundColor = .gray
+        self.backgroundColor = .white
         
         contentView.addSubview(customView)
         customView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
@@ -80,12 +80,17 @@ class WeatherCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    func fetchData(model: CurrentWeatherResponseModel) {
+    func fetchData(model: CurrentWeatherResponseModel, regionName: String) {
         customView.fetchDataForCell(
-            regionName: model.timezone,
+            regionName: regionName,
             weatherImg: model.current.weather[0].icon,
             currentTemp: model.current.temp,
             currentHumidity: model.current.humidity
         )
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
     }
 }

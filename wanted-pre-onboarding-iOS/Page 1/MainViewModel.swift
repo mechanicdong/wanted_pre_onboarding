@@ -27,24 +27,32 @@ class MainViewModel {
 //        request.httpBody = try! JSONSerialization.data(withJSONObject: location, options: .prettyPrinted)
         request.httpMethod = "GET"
         
-        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
-            guard error == nil,
-                  let response = response as? HTTPURLResponse,
-                  let data = data,
-                  let currentWeather = try?
-                    JSONDecoder().decode(CurrentWeatherResponseModel.self, from: data) else {
-                print("ERROR: URLSession Data Task \(error?.localizedDescription ?? "")")
-                return
+        let semaphore: DispatchSemaphore = DispatchSemaphore(value: 0)
+        
+        DispatchQueue.global().async {
+            let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
+                guard error == nil,
+                      let response = response as? HTTPURLResponse,
+                      let data = data,
+                      let currentWeather = try?
+                        JSONDecoder().decode(CurrentWeatherResponseModel.self, from: data) else {
+                    print("ERROR: URLSession Data Task \(error?.localizedDescription ?? "")")
+                    return
+                }
+                switch response.statusCode {
+                case (200...299):
+                    completion(currentWeather)
+                    semaphore.signal()
+                default:
+                    print("error ---> \(String(describing: error?.localizedDescription))")
+                    semaphore.signal()
+                }
             }
-            switch response.statusCode {
-            case (200...299):
-                completion(currentWeather)
-            default:
-                print("error ---> \(String(describing: error?.localizedDescription))")
-            }
+            dataTask.resume() //dataTask 실행
+            self.dataTasks.append(dataTask) //Page 중복 읽어오기 방지
+            semaphore.wait()
         }
-        dataTask.resume() //dataTask 실행
-        dataTasks.append(dataTask) //Page 중복 읽어오기 방지
+        
     }
     
     func buildQueryString(fromDictionary parameters: [String:Double]) -> String {

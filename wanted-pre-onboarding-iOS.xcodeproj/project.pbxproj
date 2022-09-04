@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DD2AAEA228C1D9A8003782F4 /* RegionGeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2AAEA128C1D9A8003782F4 /* RegionGeo.swift */; };
+		DD2AAEA428C49D9A003782F4 /* KeyOpenWeatherAPI.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD2AAEA328C49D9A003782F4 /* KeyOpenWeatherAPI.plist */; };
 		DD4D613B28BF73DD006F7517 /* AppContentTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613A28BF73DD006F7517 /* AppContentTransitionController.swift */; };
 		DD4D613D28BF7A93006F7517 /* AppContentPresentingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613C28BF7A93006F7517 /* AppContentPresentingAnimator.swift */; };
 		DD4D614028BF995C006F7517 /* WeatherContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613F28BF995C006F7517 /* WeatherContentView.swift */; };
@@ -31,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DD2AAEA128C1D9A8003782F4 /* RegionGeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionGeo.swift; sourceTree = "<group>"; };
+		DD2AAEA328C49D9A003782F4 /* KeyOpenWeatherAPI.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = KeyOpenWeatherAPI.plist; sourceTree = "<group>"; };
 		DD4D613A28BF73DD006F7517 /* AppContentTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContentTransitionController.swift; sourceTree = "<group>"; };
 		DD4D613C28BF7A93006F7517 /* AppContentPresentingAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContentPresentingAnimator.swift; sourceTree = "<group>"; };
 		DD4D613F28BF995C006F7517 /* WeatherContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherContentView.swift; sourceTree = "<group>"; };
@@ -111,6 +115,7 @@
 				DD81D0C428BEF531000780D6 /* LaunchScreen.storyboard */,
 				DD81D0C728BEF531000780D6 /* Info.plist */,
 				DDA7CBB128C1895000470989 /* Memories */,
+				DD2AAEA328C49D9A003782F4 /* KeyOpenWeatherAPI.plist */,
 			);
 			path = "wanted-pre-onboarding-iOS";
 			sourceTree = "<group>";
@@ -154,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				DDA7CBAA28C0C93F00470989 /* CurrentWeatherResponseModel.swift */,
+				DD2AAEA128C1D9A8003782F4 /* RegionGeo.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -252,6 +258,7 @@
 			files = (
 				DD81D0C628BEF531000780D6 /* LaunchScreen.storyboard in Resources */,
 				DD81D0C328BEF531000780D6 /* Assets.xcassets in Resources */,
+				DD2AAEA428C49D9A003782F4 /* KeyOpenWeatherAPI.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +274,7 @@
 				DD4D614228C06477006F7517 /* AppcontentPresentaion.swift in Sources */,
 				DDAC1AE328BF3F820013D76A /* RelativeLayoutUtilityClass.swift in Sources */,
 				DD81D0CE28BEF60F000780D6 /* BaseURL.swift in Sources */,
+				DD2AAEA228C1D9A8003782F4 /* RegionGeo.swift in Sources */,
 				DD4D614428C0B720006F7517 /* AppContentDismissAnimator.swift in Sources */,
 				DD81D0D328BF0282000780D6 /* WeatherAPIProvider.swift in Sources */,
 				DD4D614028BF995C006F7517 /* WeatherContentView.swift in Sources */,

@@ -18,7 +18,7 @@ class WeatherContentView: UIView {
         } else {
             self.setLayoutForCollectionViewCell()
         }
-        self.backgroundColor = .gray
+        self.backgroundColor = .gray.withAlphaComponent(0.2)
         //MARK: 스크롤뷰 델리게이트 설정
 //        scrollView.delegate = self
     }

@@ -93,6 +93,6 @@ class WeatherCollectionViewCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
+//        self.customView = WeatherContentView()
     }
 }

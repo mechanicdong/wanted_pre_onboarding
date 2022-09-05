@@ -60,17 +60,35 @@ class MainViewController: UIViewController {
             for (key, _) in region[i] {
                 if key == "Jeju City" {
                     let queryItem = "Jeju"
-                    viewModel.getCurrentWeather(location: queryItem) { [weak self] currentWeather in
-                        self?.currentWeatherList.append(currentWeather)
-                        DispatchQueue.main.async {
-                            self?.weatherCollectionView.reloadData()
+//                    viewModel.getCurrentWeather(location: queryItem) { [weak self] currentWeather in
+//                        self?.currentWeatherList.append(currentWeather)
+//                        DispatchQueue.main.async {
+//                            self?.weatherCollectionView.reloadData()
+//                        }
+//                    }
+                    Task {
+                        do {
+                            let weather = try await viewModel.getCurrentWeatherAsync(location: queryItem)
+                            self.currentWeatherList.append(weather)
+                            self.weatherCollectionView.reloadData()
+                        } catch {
+                            print("Error occured! :\(error)")
                         }
                     }
                 } else {
-                    viewModel.getCurrentWeather(location: key) { [weak self] currentWeather in
-                        self?.currentWeatherList.append(currentWeather)
-                        DispatchQueue.main.async {
-                            self?.weatherCollectionView.reloadData()
+//                    viewModel.getCurrentWeather(location: key) { [weak self] currentWeather in
+//                        self?.currentWeatherList.append(currentWeather)
+//                        DispatchQueue.main.async {
+//                            self?.weatherCollectionView.reloadData()
+//                        }
+//                    }
+                    Task {
+                        do {
+                            let weather = try await viewModel.getCurrentWeatherAsync(location: key)
+                            self.currentWeatherList.append(weather)
+                            self.weatherCollectionView.reloadData()
+                        } catch {
+                            print("Error occured! :\(error)")
                         }
                     }
                 }

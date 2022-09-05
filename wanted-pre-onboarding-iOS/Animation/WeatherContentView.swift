@@ -99,27 +99,30 @@ class WeatherContentView: UIView {
         label.text = "이것은 테스트를 위한 라벨입니다,이것은 테스트를 위한 라벨입니다,이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다\n이것은 테스트를 위한 라벨입니다"
         return label
     }()
+
     
     func setLayoutForCollectionViewCell() {
         self.addSubview(regionLabel)
         regionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         regionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
         
-        let tempStackView = UIStackView(arrangedSubviews: [tempImageView, presentTempLabel])
-        tempStackView.translatesAutoresizingMaskIntoConstraints = false
-        tempStackView.axis = .horizontal
-        tempStackView.distribution = .fillProportionally
-        tempStackView.alignment = .center
-        tempStackView.spacing = 50
-        
-        self.addSubview(tempStackView)
-        tempStackView.topAnchor.constraint(equalTo: regionLabel.bottomAnchor, constant: 30).isActive = true
-        tempStackView.centerXAnchor.constraint(equalTo: regionLabel.centerXAnchor).isActive = true
-        tempStackView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -50).isActive = true
-        tempStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        
+        self.addSubview(tempImageView)
+        tempImageView.topAnchor.constraint(equalTo: regionLabel.bottomAnchor, constant: 30).isActive = true
+        tempImageView.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -25).isActive = true
         tempImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         tempImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        let tempHumidityStackView = UIStackView(arrangedSubviews: [presentTempLabel, humidityLabel])
+        tempHumidityStackView.translatesAutoresizingMaskIntoConstraints = false
+        tempHumidityStackView.axis = .vertical
+        tempHumidityStackView.alignment = .center
+        tempHumidityStackView.spacing = 10
+        
+        self.addSubview(tempHumidityStackView)
+        tempHumidityStackView.topAnchor.constraint(equalTo: tempImageView.topAnchor).isActive = true
+        tempHumidityStackView.leadingAnchor.constraint(equalTo: tempImageView.trailingAnchor, constant: 50).isActive = true
+        tempHumidityStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        tempHumidityStackView.widthAnchor.constraint(equalToConstant: 100).isActive = true
     }
     
     @objc func close() {
@@ -133,51 +136,46 @@ class WeatherContentView: UIView {
         scrollView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
         scrollView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
         
-        let tempStackView = UIStackView(arrangedSubviews: [tempImageView, presentTempLabel])
+        let tempHumidityStackView = UIStackView(arrangedSubviews: [presentTempLabel, humidityLabel])
+        tempHumidityStackView.translatesAutoresizingMaskIntoConstraints = false
+        tempHumidityStackView.axis = .vertical
+        tempHumidityStackView.alignment = .center
+        tempHumidityStackView.spacing = 10
         
         if !isTransition {
             print("*****isTransition: False*****")
             scrollView.addSubview(regionLabel)
             regionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
             regionLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
-                        
-            tempStackView.translatesAutoresizingMaskIntoConstraints = false
-            tempStackView.axis = .horizontal
             
+            scrollView.addSubview(tempImageView)
+            tempImageView.topAnchor.constraint(equalTo: regionLabel.bottomAnchor, constant: 30).isActive = true
+            tempImageView.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -25).isActive = true
             tempImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
             tempImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            
-            tempStackView.distribution = .fillProportionally
-            tempStackView.alignment = .center
-            tempStackView.spacing = 80
 
-            scrollView.addSubview(tempStackView)
-            tempStackView.topAnchor.constraint(equalTo: regionLabel.bottomAnchor, constant: 30).isActive = true
-            tempStackView.centerXAnchor.constraint(equalTo: regionLabel.centerXAnchor).isActive = true
-            tempStackView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -50).isActive = true
-            tempStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            scrollView.addSubview(tempHumidityStackView)
+            tempHumidityStackView.topAnchor.constraint(equalTo: tempImageView.topAnchor).isActive = true
+            tempHumidityStackView.leadingAnchor.constraint(equalTo: tempImageView.trailingAnchor, constant: 50).isActive = true
+            tempHumidityStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            tempHumidityStackView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         } else {
             print("*****isTransition: True*****")
             scrollView.addSubview(regionLabel)
             regionLabel.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor).isActive = true
             regionLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 50).isActive = true
             
-            tempStackView.translatesAutoresizingMaskIntoConstraints = false
-            tempStackView.axis = .horizontal
-            
+            scrollView.addSubview(tempImageView)
+            tempImageView.topAnchor.constraint(equalTo: regionLabel.bottomAnchor, constant: 30).isActive = true
+            tempImageView.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -25).isActive = true
             tempImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
             tempImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
-            presentTempLabel.leadingAnchor.constraint(equalTo: tempImageView.trailingAnchor, constant: 120).isActive = true
-            
-            tempStackView.distribution = .fillProportionally
-            tempStackView.alignment = .center
-            tempStackView.spacing = 60
-            
-            scrollView.addSubview(tempStackView)
-            tempStackView.topAnchor.constraint(equalTo: regionLabel.bottomAnchor, constant: 30).isActive = true
-            tempStackView.centerXAnchor.constraint(equalTo: regionLabel.centerXAnchor).isActive = true
-            tempStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-            tempStackView.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -60).isActive = true
+
+            scrollView.addSubview(tempHumidityStackView)
+            tempHumidityStackView.topAnchor.constraint(equalTo: tempImageView.topAnchor).isActive = true
+            tempHumidityStackView.leadingAnchor.constraint(equalTo: tempImageView.trailingAnchor, constant: 50).isActive = true
+            tempHumidityStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+            tempHumidityStackView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         }
         
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -186,23 +184,19 @@ class WeatherContentView: UIView {
         closeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15).isActive = true
         closeButton.widthAnchor.constraint(equalToConstant: 45).isActive = true
         closeButton.heightAnchor.constraint(equalToConstant: 45).isActive = true
-        
-        scrollView.addSubview(testTextLabel)
-        testTextLabel.topAnchor.constraint(equalTo: tempStackView.bottomAnchor, constant: 20).isActive = true
-        testTextLabel.centerXAnchor.constraint(equalTo: tempStackView.centerXAnchor).isActive = true
-        testTextLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.8).isActive = true
-        testTextLabel.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-        testTextLabel.heightAnchor.constraint(equalToConstant: 500).isActive = true
+ 
     }
     
     func fetchDataForContentVC(regionName: String?, targetData: MainWeatherResponseModel?, isTransition: Bool = false) {
-        regionLabel.text = regionName ?? "데이터를 불러오기 실패"
+        
         testTextLabel.text = targetData?.weather[0].description
         
-        if let currentTemp = targetData?.main.temp {
+        if let currentTemp = targetData?.main.temp, let humidity = targetData?.main.humidity {
             let degreeChangedTemp = Int(round(currentTemp - 273.15))
             DispatchQueue.main.async {
+                self.regionLabel.text = regionName ?? "데이터를 불러오기 실패"
                 self.presentTempLabel.text = "\(degreeChangedTemp)" + "℃"
+                self.humidityLabel.text = "습도" + " " + "\(humidity)%"
             }
         }        
         
@@ -212,7 +206,6 @@ class WeatherContentView: UIView {
         // 01d@2x.png 형태
         
         if let cachedImg = ImageCacheManager.shared.object(forKey: NSString(string: imgUrl.lastPathComponent)) {
-            print("메모리 캐시에 이미지가 있을경우: \(imgUrl.lastPathComponent)")
             DispatchQueue.main.async {
                 self.tempImageView.image = cachedImg
             }
@@ -223,7 +216,6 @@ class WeatherContentView: UIView {
                 case .success(let image):
                     DispatchQueue.main.async {
                         self.tempImageView.image = image
-                        print("디스크캐시에서 불러온 이미지를 적용")
                     }
                 case .failure(let err):
                     print("서버(or Disk) 이미지 호출 실패! \(err.localizedDescription)")
@@ -250,12 +242,11 @@ class WeatherContentView: UIView {
         //이미지명을 가져와서 캐시에 있는지 체크
         let imgUrl = BaseURL.imgUrl.appending(weatherImg).appending("@2x.png") as NSString
         // 01d@2x.png 형태
-//        print("저장할 경로: \(imgUrl.lastPathComponent)")
         
         if let cachedImg = ImageCacheManager.shared.object(forKey: NSString(string: imgUrl.lastPathComponent)) {
-            print("메모리 캐시에 이미지가 있을경우: \(imgUrl.lastPathComponent)")
             DispatchQueue.main.async {
                 self.tempImageView.image = cachedImg
+                self.tempImageView.contentMode = .scaleAspectFit
             }
         } else {
             //없다면 디스크 경로에 이미지 체크
@@ -264,7 +255,6 @@ class WeatherContentView: UIView {
                 case .success(let image):
                     DispatchQueue.main.async {
                         self.tempImageView.image = image
-                        print("디스크캐시에서 불러온 이미지를 적용")
                     }
                 case .failure(let err):
                     print("서버(or Disk) 이미지 호출 실패! \(err.localizedDescription)")

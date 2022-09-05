@@ -15,8 +15,6 @@ class MainViewModel {
     var dataTasks = [URLSessionDataTask]()
     
     func getCurrentWeather(location: String, completion: @escaping (MainWeatherResponseModel) -> Void) {
-//        let param = buildQueryString(fromDictionary: location)
-//        print("변환된 파라미터: \(param)")
         guard let url = URL(string: BaseURL.url.appending("&q=\(location)")),
               dataTasks.first(where: { task in
                   task.originalRequest?.url == url
@@ -54,6 +52,23 @@ class MainViewModel {
         
     }
     
+    func getCurrentWeatherAsync(location: String) async throws -> MainWeatherResponseModel {
+//        print("메인스레드에서 실행되는가?: \(Thread.isMainThread)")
+        guard let url = URL(string: BaseURL.url.appending("&q=\(location)")),
+              dataTasks.first(where: { task in
+                  task.originalRequest?.url == url
+              }) == nil else { throw NetworkError.invalidURLString }
+            
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let (data, response) = try await URLSession.shared.data(for: request)
+        guard let httpResponse = response as? HTTPURLResponse,
+              httpResponse.statusCode == 200 else { throw NetworkError.invalidServerResponse }
+        let decodedWeather = try JSONDecoder().decode(MainWeatherResponseModel.self, from: data)
+        return decodedWeather
+    }
+    
     func buildQueryString(fromDictionary parameters: [String:Double]) -> String {
         var urlVars = [String]()
         for (var k, v) in parameters {
@@ -69,5 +84,8 @@ class MainViewModel {
 
 }
 
-
+enum NetworkError: Error {
+    case invalidURLString
+    case invalidServerResponse
+}
   

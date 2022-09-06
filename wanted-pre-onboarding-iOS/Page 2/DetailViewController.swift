@@ -94,7 +94,7 @@ extension DetailViewController: UICollectionViewDataSource {
         cell.customView.translatesAutoresizingMaskIntoConstraints = false
         cell.configureCellLayout()
         if let regionName = regionName, let targetData = targetData {
-            cell.fetchData(model: targetData, regionName: regionName)
+            cell.fetchData(model: targetData, regionName: regionName, forURLString: nil)
         }
         
         return cell

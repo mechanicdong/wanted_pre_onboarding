@@ -48,7 +48,7 @@ class AppContentPresentingAnimator: NSObject, UIViewControllerAnimatedTransition
         let contentView = WeatherContentView(isContentView: true, isTransition: true)
         
         if let targetData = targetData, let regionString = regionString {
-            contentView.fetchDataForContentVC(regionName: regionString, targetData: targetData, isTransition: true)
+            contentView.fetchDataForContentVC(regionName: regionString, targetData: targetData, isTransition: true, forURLString: nil)
         }
         
         

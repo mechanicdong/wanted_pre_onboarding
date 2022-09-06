@@ -200,7 +200,7 @@ struct RegionName {
     static let chuncheon: [String: String] = [
         "Chuncheon": "춘천"
     ]
-    
+
     var regionGeoArray: [[String:String]] = [
         gongju, gwangju, gumi, gunsan, daegu,
         daejeon, mokpo, busan, seosan, seoul,

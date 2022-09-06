@@ -11,6 +11,7 @@ import UIKit
 class MainViewController: UIViewController {
     
     var currentWeatherList = [MainWeatherResponseModel]()
+    var subWeatherList = [SubWeatherResponseModel]()
     
     let viewModel = MainViewModel.shared
     
@@ -55,40 +56,22 @@ class MainViewController: UIViewController {
         currentPage = 0
         
         ///Network
-//        weatherCollectionView.prefetchDataSource = self
+        weatherCollectionView.prefetchDataSource = self
+        
         for i in 0..<region.count {
             for (key, _) in region[i] {
                 if key == "Jeju City" {
-                    let queryItem = "Jeju"
-//                    viewModel.getCurrentWeather(location: queryItem) { [weak self] currentWeather in
-//                        self?.currentWeatherList.append(currentWeather)
-//                        DispatchQueue.main.async {
-//                            self?.weatherCollectionView.reloadData()
-//                        }
-//                    }
-                    Task {
-                        do {
-                            let weather = try await viewModel.getCurrentWeatherAsync(location: queryItem)
-                            self.currentWeatherList.append(weather)
+                    viewModel.getCurrentWeather(location: "Jeju") { response in
+                        self.currentWeatherList.append(response)
+                        DispatchQueue.main.async {
                             self.weatherCollectionView.reloadData()
-                        } catch {
-                            print("Error occured! :\(error)")
                         }
                     }
                 } else {
-//                    viewModel.getCurrentWeather(location: key) { [weak self] currentWeather in
-//                        self?.currentWeatherList.append(currentWeather)
-//                        DispatchQueue.main.async {
-//                            self?.weatherCollectionView.reloadData()
-//                        }
-//                    }
-                    Task {
-                        do {
-                            let weather = try await viewModel.getCurrentWeatherAsync(location: key)
-                            self.currentWeatherList.append(weather)
+                    viewModel.getCurrentWeather(location: key) { response in
+                        self.currentWeatherList.append(response)
+                        DispatchQueue.main.async {
                             self.weatherCollectionView.reloadData()
-                        } catch {
-                            print("Error occured! :\(error)")
                         }
                     }
                 }
@@ -108,16 +91,6 @@ class MainViewController: UIViewController {
         //양 옆 셀 보이는 부분
         spacingLayout.spacingMode = UPCarouselFlowLayoutSpacingMode.overlap(visibleOffset: 20)
     }
-    
-//    // MARK: UIScrollViewDelegate
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        let layout = self.weatherCollectionView.collectionViewLayout as! CardCollectionViewFlowLayout
-//        let pageSide = (layout.scrollDirection == .horizontal) ? self.pageSize.width : self.pageSize.height
-//        let offset = (layout.scrollDirection == .horizontal) ? scrollView.contentOffset.x : scrollView.contentOffset.y
-//        currentPage = Int(floor((offset - pageSide / 2) / pageSide) + 1)
-//        print("현재페이지: \(currentPage)")
-//    }
-    
 }
 
 extension MainViewController: UICollectionViewDataSource {
@@ -136,12 +109,16 @@ extension MainViewController: UICollectionViewDataSource {
         cell.layer.cornerRadius = 12
         
         let crtWeather = self.currentWeatherList[indexPath.row]
-        for i in 0..<region.count {
-            for (key, value) in region[i] {
-                if crtWeather.name == key {
-                    cell.fetchData(model: crtWeather, regionName: value)
+        
+        for (key, value) in region[indexPath.row] {
+            if key == crtWeather.name {
+                if key == "Jeju City" {
+                    cell.fetchData(model: crtWeather, regionName: value, forURLString: "Jeju")
+                } else {
+                    cell.fetchData(model: crtWeather, regionName: value, forURLString: key)
                 }
             }
+            break
         }
         return cell
     }
@@ -186,18 +163,39 @@ extension MainViewController: UICollectionViewDelegate {
     
 }
 
-//extension MainViewController: UICollectionViewDataSourcePrefetching {
-//    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
-//        print("프리패치 실행")
-//        guard currentPage != 0 else { return }
-//        print("현재페이지 프리페치: \(currentPage)")
-//        indexPaths.forEach {
-//            self.viewModel.getCurrentWeather(location: regionNameArr[$0.row]) { response in
-//                self.currentWeatherList.append(response)
-//                DispatchQueue.main.async {
-//                    self.weatherCollectionView.reloadData()
-//                }
-//            }
-//        }
-//    }
-//}
+extension MainViewController: UICollectionViewDataSourcePrefetching {
+    
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print("*********** 프리패치 실행 ***********")
+        print("프리패치 인덱스 패스: \(indexPaths)") //currentPage = 0 -> 2(1,2) , currentPage = 1 -> 3(1,2,3), 2 -> 4(2,3,4)
+        
+        indexPaths.forEach {
+            print("인덱스 패스 로우값: \($0.row)")
+            if ($0.row == self.currentPage + 1) && (self.currentPage < 20) {
+                for (key, _) in region[self.currentPage+2] {
+                    if key == "Jeju City" {
+                        let queryItem = "Jeju"
+                        viewModel.getCurrentWeather(location: queryItem) { response in
+                            self.currentWeatherList.append(response)
+                            DispatchQueue.main.async {
+                                self.weatherCollectionView.reloadData()
+                            }
+                        }
+                    } else {
+                        viewModel.getCurrentWeather(location: key) { response in
+                            self.currentWeatherList.append(response)
+                            DispatchQueue.main.async {
+                                self.weatherCollectionView.reloadData()
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        self.collectionView(weatherCollectionView, prefetchItemsAt: [indexPath])
+    }
+}

@@ -10,6 +10,12 @@ import UIKit
 
 class WeatherContentView: UIView {
     
+    let NUMBER_OF_CELL = 20
+    
+    let viewModel = MainViewModel()
+    var subData: SubWeatherResponseModel?
+    
+    
     init(isContentView: Bool, isTransition: Bool = false) {
         super.init(frame: .zero)
         // for reusable
@@ -100,6 +106,17 @@ class WeatherContentView: UIView {
         return label
     }()
 
+    public lazy var subCollectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        layout.minimumLineSpacing = 10
+        let cv = UICollectionView(frame: .init(x: 0, y: 0, width: 100, height: 100), collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.delegate = self
+        cv.dataSource = self
+        cv.register(WeatherCollectionViewSubCell.self, forCellWithReuseIdentifier: "WeatherCollectionViewSubCell")
+        return cv
+    }()
     
     func setLayoutForCollectionViewCell() {
         self.addSubview(regionLabel)
@@ -123,6 +140,16 @@ class WeatherContentView: UIView {
         tempHumidityStackView.leadingAnchor.constraint(equalTo: tempImageView.trailingAnchor, constant: 50).isActive = true
         tempHumidityStackView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         tempHumidityStackView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        
+        self.addSubview(subCollectionView)
+        let subCollectionViewConstraints = [
+            subCollectionView.topAnchor.constraint(equalTo: tempHumidityStackView.bottomAnchor, constant: 50),
+            subCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
+            subCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            subCollectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -100)
+        ]
+        
+        NSLayoutConstraint.activate(subCollectionViewConstraints)
     }
     
     @objc func close() {
@@ -187,9 +214,18 @@ class WeatherContentView: UIView {
  
     }
     
-    func fetchDataForContentVC(regionName: String?, targetData: MainWeatherResponseModel?, isTransition: Bool = false) {
-        
-        testTextLabel.text = targetData?.weather[0].description
+    func fetchDataForContentVC(regionName: String?, targetData: MainWeatherResponseModel?, isTransition: Bool = false, forURLString: String?) {
+        print("스트링: \(forURLString)")
+        if let regionName = forURLString {
+            viewModel.getSubCurrentWeather(location: regionName) { response in
+                self.subData = response
+                DispatchQueue.main.async {
+                    self.subCollectionView.reloadData()
+                }
+            }
+        }
+
+//        testTextLabel.text = targetData?.weather[0].description
         
         if let currentTemp = targetData?.main.temp, let humidity = targetData?.main.humidity {
             let degreeChangedTemp = Int(round(currentTemp - 273.15))
@@ -268,4 +304,47 @@ class WeatherContentView: UIView {
         //2. 없다면 url 호출로 이미지 불러오고, 디스크 경로에 저장하기
         
     }
+}
+
+extension WeatherContentView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return NUMBER_OF_CELL
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "WeatherCollectionViewSubCell", for: indexPath) as! WeatherCollectionViewSubCell
+
+        if let dateStr = subData?.list[indexPath.row].dt {
+            let unixTimeDate = Date(timeIntervalSince1970: dateStr)
+            DispatchQueue.main.async {
+                cell.timeLabel.text = "13시"
+            }
+        }
+        if let imgName = subData?.list[indexPath.row].weather[0].icon {
+            let imgUrl = BaseURL.imgUrl.appending(imgName).appending("@2x.png") as NSString
+            if let cachedImg = ImageCacheManager.shared.object(forKey: NSString(string: imgUrl.lastPathComponent)) {
+                DispatchQueue.main.async {
+                    cell.imgView.image = cachedImg
+                }
+            } else {
+                CustomFileManager.getImageFromDisk(imgUrl: imgUrl) { type in
+                    switch type {
+                    case .success(let image):
+                        DispatchQueue.main.async {
+                            cell.imgView.image = image
+                        }
+                    case .failure(let err):
+                        print("서버(or Disk) 이미지 호출 실패! \(err.localizedDescription)")
+                    }
+                }
+            }
+        }
+        return cell
+    }
+    
+    
 }

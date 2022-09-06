@@ -9,9 +9,9 @@ import Foundation
 
 struct BaseURL {
     static let exclude = "minutely,alerts,hourly"
-//    static var url = "https://api.openweathermap.org/data/3.0/onecall?appid=\(weatherAPIKey)&lang=kr&exclude=\(exclude)&"
     static var url = "https://api.openweathermap.org/data/2.5/weather?lang=kr&appid=\(weatherAPIKey)"
     static var imgUrl = "http://openweathermap.org/img/wn/"
+    static var subDataUrl = "https://api.openweathermap.org/data/2.5/forecast?appid=\(weatherAPIKey)&lang=kr&cnt=20"
 }
 
 private var weatherAPIKey: String {

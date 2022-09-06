@@ -10,6 +10,8 @@
 		DD2AAEA228C1D9A8003782F4 /* RegionGeo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2AAEA128C1D9A8003782F4 /* RegionGeo.swift */; };
 		DD2AAEA428C49D9A003782F4 /* KeyOpenWeatherAPI.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD2AAEA328C49D9A003782F4 /* KeyOpenWeatherAPI.plist */; };
 		DD2AAEA628C4A5E5003782F4 /* MainWeatherResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2AAEA528C4A5E5003782F4 /* MainWeatherResponseModel.swift */; };
+		DD2AAEA828C64494003782F4 /* WeatherCollectionViewSubCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2AAEA728C64494003782F4 /* WeatherCollectionViewSubCell.swift */; };
+		DD2AAEAA28C64F9B003782F4 /* SubWeatherResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD2AAEA928C64F9B003782F4 /* SubWeatherResponseModel.swift */; };
 		DD4D613B28BF73DD006F7517 /* AppContentTransitionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613A28BF73DD006F7517 /* AppContentTransitionController.swift */; };
 		DD4D613D28BF7A93006F7517 /* AppContentPresentingAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613C28BF7A93006F7517 /* AppContentPresentingAnimator.swift */; };
 		DD4D614028BF995C006F7517 /* WeatherContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4D613F28BF995C006F7517 /* WeatherContentView.swift */; };
@@ -37,6 +39,8 @@
 		DD2AAEA128C1D9A8003782F4 /* RegionGeo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegionGeo.swift; sourceTree = "<group>"; };
 		DD2AAEA328C49D9A003782F4 /* KeyOpenWeatherAPI.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = KeyOpenWeatherAPI.plist; sourceTree = "<group>"; };
 		DD2AAEA528C4A5E5003782F4 /* MainWeatherResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWeatherResponseModel.swift; sourceTree = "<group>"; };
+		DD2AAEA728C64494003782F4 /* WeatherCollectionViewSubCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewSubCell.swift; sourceTree = "<group>"; };
+		DD2AAEA928C64F9B003782F4 /* SubWeatherResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubWeatherResponseModel.swift; sourceTree = "<group>"; };
 		DD4D613A28BF73DD006F7517 /* AppContentTransitionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContentTransitionController.swift; sourceTree = "<group>"; };
 		DD4D613C28BF7A93006F7517 /* AppContentPresentingAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContentPresentingAnimator.swift; sourceTree = "<group>"; };
 		DD4D613F28BF995C006F7517 /* WeatherContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherContentView.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 				DD81D0D028BEF6C3000780D6 /* MainViewController.swift */,
 				DDA191A528BF172E00FFF98E /* WeatherCollectionViewCell.swift */,
 				DDA7CBAD28C0CE5F00470989 /* MainViewModel.swift */,
+				DD2AAEA728C64494003782F4 /* WeatherCollectionViewSubCell.swift */,
 			);
 			path = "Page 1";
 			sourceTree = "<group>";
@@ -163,6 +168,7 @@
 				DDA7CBAA28C0C93F00470989 /* CurrentWeatherResponseModel.swift */,
 				DD2AAEA128C1D9A8003782F4 /* RegionGeo.swift */,
 				DD2AAEA528C4A5E5003782F4 /* MainWeatherResponseModel.swift */,
+				DD2AAEA928C64F9B003782F4 /* SubWeatherResponseModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -274,6 +280,7 @@
 			files = (
 				DD81D0BA28BEF52F000780D6 /* AppDelegate.swift in Sources */,
 				DD81D0BC28BEF52F000780D6 /* SceneDelegate.swift in Sources */,
+				DD2AAEA828C64494003782F4 /* WeatherCollectionViewSubCell.swift in Sources */,
 				DD4D614228C06477006F7517 /* AppcontentPresentaion.swift in Sources */,
 				DDAC1AE328BF3F820013D76A /* RelativeLayoutUtilityClass.swift in Sources */,
 				DD81D0CE28BEF60F000780D6 /* BaseURL.swift in Sources */,
@@ -284,6 +291,7 @@
 				DD4D614028BF995C006F7517 /* WeatherContentView.swift in Sources */,
 				DDA7CBAE28C0CE5F00470989 /* MainViewModel.swift in Sources */,
 				DD4D613B28BF73DD006F7517 /* AppContentTransitionController.swift in Sources */,
+				DD2AAEAA28C64F9B003782F4 /* SubWeatherResponseModel.swift in Sources */,
 				DDAC1AE628BF41AD0013D76A /* Font.swift in Sources */,
 				DD4D613D28BF7A93006F7517 /* AppContentPresentingAnimator.swift in Sources */,
 				DDA191A328BF127500FFF98E /* CardCollectionViewFlowLayout.swift in Sources */,
